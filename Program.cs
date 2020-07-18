@@ -13,6 +13,7 @@ namespace Aula27_28_29_30
             produto.Preco = 399.99f;
 
             produto.Inserir(produto);
+            produto.Remover("Adiddas");
 
             List<Produto> lista = new List<Produto>();
             lista = produto.Ler();

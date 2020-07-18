@@ -32,13 +32,17 @@ namespace Aula27_28_29_30
             return $"codigo={produto.Codigo}-Nome {produto.Nome}-Preço R$ {produto.Preco}";
         }
         /// <summary>
-        /// inserir
+        /// Inserir
         /// </summary>
-        /// <param name="p">inseri as informaçoes no CVS</param>
+        /// <param name="p">Inseri as informaçoes no CVS</param>
         public void Inserir(Produto p){
             var linha = new string[]{p.PrepararLinhaCSV(p)};
             File.AppendAllLines(PATH, linha);
         }
+        /// <summary>
+        /// Ler
+        /// </summary>
+        /// <returns>Responsavel por ler as linhas do CVS</returns>
         public List<Produto> Ler(){
 
 
@@ -46,7 +50,7 @@ namespace Aula27_28_29_30
 
         string[] linhas = File.ReadAllLines(PATH);
 
-        foreach(var linha in linhas){
+        foreach(string linha in linhas){
 
             string[] dados = linha.Split(";");
 
@@ -67,7 +71,32 @@ namespace Aula27_28_29_30
         
             return dados.Split("=")[1];
         }
+        /// <summary>
+        /// Remover
+        /// </summary>
+        /// <param name="_dados1">Responsavel por deletar as linhas selecionada do CSV</param>
+         public void Remover(string _dados1){
+
+             List<string> lines = new List<string>();
+
+             using(StreamReader file = new StreamReader(PATH)){
+                string line;
+                while(( line = file.ReadLine()) != null){
+                    lines.Add(line);
+                }
+                lines.RemoveAll( r => r.Contains(_dados1));
+            }
+
+            using(StreamWriter output = new StreamWriter(PATH)){
+                output.Write(String.Join(Environment.NewLine, lines.ToArray()));                
+            }
+        }
+
+
+
+
+
 
         
-      }
+    }
 }
